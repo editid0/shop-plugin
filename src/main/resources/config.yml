@@ -1,0 +1,83 @@
+# SimpleShop configuration
+# All text uses MiniMessage formatting: https://docs.advntr.dev/minimessage/format.html
+# Items/prices live in shop.yml, GUI layout lives in menus.yml.
+
+# Used by the automatic updater. Don't change.
+config-version: 2
+
+# Use the economy plugin's own money format (e.g. "$1,234.50" or "1,234.50 Coins").
+# If false, or no economy is hooked, 'currency-format' is used instead.
+use-economy-format: true
+# %s is replaced with the number formatted as 1,234.50
+currency-format: "$%s"
+
+# Play click/purchase sounds in the GUI
+sounds: true
+
+# Supply & demand. Selling an item lowers its price, buying raises it, and prices drift back to
+# the base price (the one in shop.yml) over time. Buy and sell prices move together, so the
+# shop can never be looped for profit.
+dynamic-pricing:
+  enabled: true
+  # How much money worth of an item (at base price) must be sold for its price to halve.
+  # Cheap items need far more units than expensive ones: with 20000, ~80,000 cobblestone or ~270 diamonds.
+  # Per-item override in shop.yml: 'volume: <units>'. Disable per item with 'dynamic: false'.
+  money-volume: 20000
+  # Prices never go below / above these multiples of the base price
+  min-multiplier: 0.25
+  max-multiplier: 3.0
+  # Hours for a price to recover halfway back to its base price
+  recovery-half-life-hours: 6
+
+# Ask for confirmation before big transactions
+confirm:
+  enabled: true
+  # Total price at or above which a buy/sell needs confirming (0 = always)
+  above: 1000
+  # Always confirm command items (ranks, kits, ...)
+  command-items: true
+
+# Transaction logging
+logging:
+  # Write every transaction to plugins/SimpleShop/logs/transactions-<date>.log
+  file: true
+  # How many recent transactions to keep in memory for /shop log
+  memory: 1000
+
+messages:
+  prefix: "<dark_gray>[<gold>Shop</gold>]</dark_gray> "
+  no-economy: "<red>No economy is available. Install Vault (or VaultUnlocked) and an economy plugin."
+  no-permission: "<red>You don't have permission to do that."
+  players-only: "<red>Only players can use this command."
+  unknown-category: "<red>Unknown category <white><category></white>."
+  reloaded: "<green>Shop reloaded: <white><categories></white> categories, <white><items></white> items."
+  bought: "<green>Bought <white><amount>x <item></white> for <gold><price></gold>."
+  bought-command: "<green>Purchased <white><item></white> for <gold><price></gold>."
+  sold: "<green>Sold <white><amount>x <item></white> for <gold><price></gold>."
+  sold-multiple: "<green>Sold <white><amount></white> items for <gold><price></gold>."
+  not-enough-money: "<red>You need <gold><price></gold> but only have <gold><balance></gold>."
+  not-enough-space: "<red>Not enough inventory space (room for <white><space></white>)."
+  not-enough-items: "<red>You only have <white><have>x <item></white>."
+  nothing-to-sell: "<red>You have nothing the shop will buy."
+  not-sellable: "<red>The shop doesn't buy that item."
+  not-buyable: "<red>That item can't be bought."
+  item-unavailable: "<red>That item is no longer in the shop."
+  price-changed: "<yellow>The price changed to <gold><price></gold>, please confirm again."
+  invalid-amount: "<red>Enter a whole number between 1 and <white><max></white>."
+  amount-limit: "<red>You can buy at most <white><max></white> of that at once."
+  transaction-failed: "<red>Transaction failed: <white><reason></white>"
+  items-returned: "<yellow>Returned <white><amount></white> item(s) the shop doesn't buy."
+  worth-hand: "<gray><amount>x <white><item></white> sells for <gold><price></gold> <dark_gray>(<unit> each)"
+  worth-all: "<gray>Your inventory sells for <gold><price></gold> <dark_gray>(<amount> items)"
+  worth-none: "<red>The shop doesn't buy that item."
+  search-none: "<red>No items match <white><query></white>."
+  market-reset: "<green>Reset dynamic prices for <white><target></white>."
+  editor-saved: "<green>Updated <white><item></white>: buy <gold><buy></gold>, sell <gold><sell></gold>."
+  editor-added: "<green>Added <white><item></white> to <white><category></white>."
+  editor-removed: "<green>Removed <white><item></white> from the shop."
+  editor-exists: "<red><item> is already in this category."
+  editor-invalid-price: "<red>Invalid price <white><value></white>. Use a number like 12.5 (0 = disabled)."
+  editor-failed: "<red>Could not save shop.yml: <white><reason></white>"
+  log-header: "<gold>Recent transactions<gray><filter>:"
+  log-entry: "<dark_gray><time></dark_gray> <white><player></white> <type> <gray><amount>x <item></gray> <gold><price></gold>"
+  log-empty: "<gray>No transactions found."

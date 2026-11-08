@@ -1,0 +1,70 @@
+name: SimpleShop
+version: '${version}'
+main: dev.editid.simpleshop.SimpleShopPlugin
+description: Simple GUI shop for buying and selling common items. Hooks into any Vault economy.
+api-version: '26.3'
+folia-supported: true
+authors: [ editid ]
+
+dependencies:
+  server:
+    # Vault / VaultUnlocked provide the economy bridge. join-classpath lets us use the Vault API classes.
+    Vault:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    VaultUnlocked:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    # Common economy plugins: loading after them means the economy is usually registered by the time we start.
+    Essentials:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    CMI:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    TheNewEconomy:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    XConomy:
+      load: BEFORE
+      required: false
+      join-classpath: false
+    CoinsEngine:
+      load: BEFORE
+      required: false
+      join-classpath: false
+
+permissions:
+  simpleshop.use:
+    description: Open the shop with /shop
+    default: true
+  simpleshop.buy:
+    description: Buy items from the shop
+    default: true
+  simpleshop.sell:
+    description: Sell items to the shop (GUI and /sell)
+    default: true
+  simpleshop.worth:
+    description: Check sell values with /worth and /shop worth
+    default: true
+  simpleshop.edit:
+    description: Edit prices and items in-game with /shop edit
+    default: op
+  simpleshop.log:
+    description: View recent transactions with /shop log
+    default: op
+  simpleshop.admin:
+    description: Reload the shop and reset dynamic prices
+    default: op
+    children:
+      simpleshop.edit: true
+      simpleshop.log: true

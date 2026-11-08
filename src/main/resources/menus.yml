@@ -1,0 +1,160 @@
+# SimpleShop GUI layout
+#
+# Every button: slot (0-based, -1 hides it), material, name, lore. Text is MiniMessage.
+# Placeholders available in each menu are listed above it.
+# Slots are counted left-to-right, top-to-bottom: the first row is 0-8, the second 9-17, ...
+
+# Used by the automatic updater. Don't change.
+config-version: 2
+
+# Placeholders: <balance>
+main:
+  title: "<dark_gray>Shop"
+  rows: 4
+  filler: GRAY_STAINED_GLASS_PANE
+  # Lore of category icons. Placeholders: <category>, <items>
+  category-lore:
+    - "<gray><items> items"
+    - ""
+    - "<yellow>Click to browse"
+  buttons:
+    search:
+      slot: 29
+      material: COMPASS
+      name: "<aqua>Search"
+      lore: [ "<gray>Find an item by name.", "", "<yellow>Click to search" ]
+    balance:
+      slot: 31
+      material: SUNFLOWER
+      name: "<yellow>Balance"
+      lore: [ "<gold><balance>" ]
+    sell:
+      slot: 33
+      material: HOPPER
+      name: "<gold>Sell Items"
+      lore: [ "<gray>Opens a box to drop items into.", "<gray>Everything sellable is sold on close.", "", "<yellow>Click to open" ]
+
+# Item list for a category or search results. Items fill every row except the last.
+# Placeholders: <balance>, <page>, <pages>, <category>
+category:
+  rows: 6
+  filler: GRAY_STAINED_GLASS_PANE
+  buttons:
+    back: { slot: 45, material: ARROW, name: "<yellow>Back" }
+    previous: { slot: 48, material: PAPER, name: "<yellow>Previous page", lore: [ "<gray>Page <page>/<pages>" ] }
+    balance: { slot: 49, material: SUNFLOWER, name: "<yellow>Balance", lore: [ "<gold><balance>" ] }
+    next: { slot: 50, material: PAPER, name: "<yellow>Next page", lore: [ "<gray>Page <page>/<pages>" ] }
+    close: { slot: 53, material: BARRIER, name: "<red>Close" }
+    # Only shown in /shop edit
+    editor-hint:
+      slot: 47
+      material: WRITABLE_BOOK
+      name: "<gold>Add items"
+      lore: [ "<gray>Click an item in your own", "<gray>inventory to add it here." ]
+  # Lore of each shop item. Placeholders: <item>, <buy>, <buy_stack>, <sell>, <sell_stack>,
+  # <stack>, <owned>, <trend>
+  item:
+    name: "<white><item>"
+    buy: [ "<gray>Buy: <green><buy></green> each", "<dark_gray>  <stack> for <buy_stack>" ]
+    no-buy: [ "<red>Not for sale" ]
+    sell: [ "<gray>Sell: <gold><sell></gold> each", "<dark_gray>  <stack> for <sell_stack>" ]
+    no-sell: [ "<red>The shop doesn't buy this" ]
+    # Shown when dynamic pricing is active for the item
+    market: [ "<gray>Market: <trend>" ]
+    actions-buy: [ "", "<yellow>Left-click <gray>to buy", "<yellow>Shift-left-click <gray>to buy <stack>" ]
+    actions-sell: [ "<yellow>Right-click <gray>to sell", "<yellow>Shift-right-click <gray>to sell all <dark_gray>(<owned>)" ]
+    actions-command: [ "", "<yellow>Click <gray>to purchase" ]
+    editor: [ "", "<gold>Editor", "<yellow>Click <gray>to edit prices", "<yellow>Shift-right-click <gray>to remove" ]
+  # How the market trend is shown. Placeholder: <percent>
+  trend:
+    up: "<red>▲ +<percent>%"
+    down: "<green>▼ -<percent>%"
+    stable: "<gray>● base price"
+
+# Buy/sell amount picker. Placeholders: <item>, <price>, <owned>, <balance>
+trade:
+  title-buy: "<dark_green>Buy <item>"
+  title-sell: "<dark_red>Sell <item>"
+  rows: 3
+  filler: GRAY_STAINED_GLASS_PANE
+  amounts: [ 1, 8, 16, 32, 64, 128 ]
+  amount-slots: [ 10, 11, 12, 13, 14, 15 ]
+  # Placeholders: <amount>, <total>
+  amount-buy: { name: "<green>Buy <amount>x", lore: [ "<gray>Total: <green><total>", "", "<yellow>Click to buy" ] }
+  amount-sell: { name: "<gold>Sell <amount>x", lore: [ "<gray>Total: <gold><total>", "", "<yellow>Click to sell" ] }
+  warning-afford: "<red>You can't afford this"
+  warning-items: "<red>You only have <owned>"
+  buttons:
+    info:
+      slot: 4
+      name: "<white><item>"
+      lore: [ "<gray>Price: <white><price></white> each", "<gray>You have: <white><owned>", "<gray>Balance: <gold><balance>" ]
+    max-buy:
+      slot: 16
+      material: CHEST
+      name: "<green>Buy max"
+      lore: [ "<gray>As many as you can afford", "<gray>and fit in your inventory.", "", "<yellow>Click to buy" ]
+    max-sell:
+      slot: 16
+      material: HOPPER
+      name: "<gold>Sell all"
+      lore: [ "<gray>Sell all <owned> for <gold><total>", "", "<yellow>Click to sell" ]
+    custom:
+      slot: 22
+      material: OAK_SIGN
+      name: "<aqua>Custom amount"
+      lore: [ "<gray>Type any amount.", "", "<yellow>Click to enter" ]
+    back: { slot: 18, material: ARROW, name: "<yellow>Back" }
+    switch-to-sell: { slot: 24, material: GOLD_INGOT, name: "<gold>Switch to selling" }
+    switch-to-buy: { slot: 24, material: EMERALD, name: "<green>Switch to buying" }
+    close: { slot: 26, material: BARRIER, name: "<red>Close" }
+
+# Confirmation for big purchases. Placeholders: <action>, <amount>, <item>, <total>, <balance>
+confirm:
+  title: "<dark_gray>Confirm <action>"
+  rows: 3
+  filler: GRAY_STAINED_GLASS_PANE
+  buttons:
+    confirm:
+      slot: 11
+      material: LIME_CONCRETE
+      name: "<green><bold>Confirm"
+      lore: [ "<gray><action> <white><amount>x <item>", "<gray>for <gold><total>" ]
+    info:
+      slot: 13
+      name: "<white><item>"
+      lore: [ "<gray>Amount: <white><amount>", "<gray>Total: <gold><total>", "<gray>Balance: <gold><balance>" ]
+    cancel:
+      slot: 15
+      material: RED_CONCRETE
+      name: "<red><bold>Cancel"
+
+sell:
+  title: "<dark_gray>Sell items <gray>(close to sell)"
+  rows: 6
+
+editor:
+  title: "<dark_red>Shop Editor"
+  category-title: "<dark_red>Edit: <category>"
+
+search:
+  title: "<dark_gray>Search: <query>"
+
+# Pop-up text input dialogs (search, custom amount, price editor)
+dialogs:
+  confirm: "<green>Confirm"
+  cancel: "<red>Cancel"
+  save: "<green>Save"
+  search-title: "Search the shop"
+  search-label: "Item name"
+  amount-title: "<item>"
+  amount-label-buy: "Amount to buy (max <max>)"
+  amount-label-sell: "Amount to sell (you have <max>)"
+  editor-title: "Edit <item>"
+  editor-body: "Prices are per item. 0 disables buying or selling."
+  editor-buy: "Buy price"
+  editor-sell: "Sell price"
+  editor-reset: "Reset dynamic price to base"
+  add-title: "Add <item>"
+  remove-title: "Remove <item>?"
+  remove-body: "This deletes the item from shop.yml."
